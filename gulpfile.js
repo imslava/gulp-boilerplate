@@ -109,5 +109,5 @@ const watching = () => {
   watch('src/resources/**/*', parallel(resources));
 };
 
-exports.default = series(clean, parallel(libs_js, js, libs_style, style, html, watching));
-exports.build = series(clean, parallel(libs_js, js, libs_style, style, html));
+exports.default = series(clean, parallel(libs_js, js, libs_style, style, html, img, resources, watching));
+exports.build = series(clean, parallel(libs_js, js, libs_style, style, html, img, resources));
