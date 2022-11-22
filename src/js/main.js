@@ -8,11 +8,10 @@
 
 // viewportFix(375);
 
-$('[data-fancybox]').fancybox({
-  touch: false,
+Fancybox.bind('[data-fancybox]', {
+  dragToClose: false,
   autoFocus: false,
-  backFocus: false,
-  closeExisting: true,
+  placeFocusBack: false,
 });
 
 const maskPhone = () => {
