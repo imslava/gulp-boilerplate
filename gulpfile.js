@@ -13,7 +13,7 @@ const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const noop = require('gulp-noop');
 
-const isMinify = true;
+const isMinify = false;
 
 const clean = () => del(['app']);
 
