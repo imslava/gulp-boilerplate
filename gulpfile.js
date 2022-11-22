@@ -6,7 +6,6 @@ const sass = require('gulp-sass')(require('sass'));
 const prefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
-const map = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify-es').default;
 const del = require('del');
 const replace = require('gulp-replace');
@@ -14,7 +13,7 @@ const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const noop = require('gulp-noop');
 
-const isMinify = false;
+const isMinify = true;
 
 const clean = () => del(['app']);
 
@@ -40,23 +39,19 @@ const style = () => {
         })),
       })
     )
-    .pipe(map.init())
     .pipe(sass())
     .pipe(isMinify ? cleanCSS({ level: 2 }) : noop())
     .pipe(isMinify ? prefixer({ overrideBrowserslist: ['last 8 versions'] }) : noop())
     .pipe(isMinify ? concat('main.min.css') : concat('main.css'))
-    .pipe(map.write('/sourcemaps'))
     .pipe(dest('app/css/'))
     .pipe(bs.stream());
 };
 
 const libs_style = () => {
   return src('src/sass/libs.sass')
-    .pipe(map.init())
     .pipe(sass())
     .pipe(isMinify ? cleanCSS({ level: 2 }) : noop())
     .pipe(isMinify ? concat('libs.min.css') : concat('libs.css'))
-    .pipe(map.write('/sourcemaps'))
     .pipe(dest('app/css/'));
 };
 
@@ -70,20 +65,16 @@ const js = () => {
         })),
       })
     )
-    .pipe(map.init())
     .pipe(isMinify ? uglify() : noop())
     .pipe(isMinify ? concat('main.min.js') : concat('main.js'))
-    .pipe(map.write('/sourcemaps'))
     .pipe(dest('app/js/'))
     .pipe(bs.stream());
 };
 
 const libs_js = () => {
   return src(['src/js/vendor/fancybox.umd.js', 'src/js/vendor/swiper-bundle.min.js', 'src/js/vendor/imask.min.js'])
-    .pipe(map.init())
     .pipe(isMinify ? uglify() : noop())
     .pipe(isMinify ? concat('libs.min.js') : concat('libs.js'))
-    .pipe(map.write('/sourcemaps'))
     .pipe(dest('app/js/'));
 };
 
